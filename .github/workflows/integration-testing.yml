@@ -49,14 +49,14 @@ jobs:
         export HOST_IP_ADDRESS=$(hostname -I | awk '{print $1}')
         bionic install --testing --hostname-url http://$HOST_IP_ADDRESS
 
-    - name: Install Cornucopis
+    - name: Install Cornucopia
       run: |
         curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
         cargo binstall --version 0.9.0 cornucopia -y
 
     - name: Wait for All the Pods
       run: |
-        sleep 40
+        sleep 80
         kubectl get pods -n bionic-gpt
         kubectl wait  --timeout=120s --for=condition=ready -n bionic-gpt pod/bionic-db-cluster-1
         kubectl wait  --timeout=120s --for=condition=ready -n bionic-gpt pod/keycloak-db-cluster-1
